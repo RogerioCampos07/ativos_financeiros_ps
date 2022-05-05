@@ -2,8 +2,6 @@ import httpx
 from secrets import chave
 
 
-
-
 class Ativos:
     chave = chave
 
@@ -25,26 +23,22 @@ class Ativos:
         resultado = request.json()
         nome = (resultado['results'][acao]['company_name'])
         preco = round(float(resultado['results'][acao]['price']),2)
-        return {nome:preco}
+        ativo = {}
+        ativo['symbol'] = acao
+        ativo['name_company'] = nome
+        ativo['preco'] = preco
+        return ativo
 
     def dados_moeda(self,moeda):
         requisicao = httpx.get(self.url_moeda(),params = self.params(moeda))
         resultado = requisicao.json()
         nome = (resultado['results']['currencies'][moeda]['name'])
         preco = round(float(resultado['results']['currencies'][moeda]['sell']),2)
-        return {nome:preco}
+        ativo = {['moeda']:{nome:preco},}
+        return ativo
 
     
 
     
 
 
-op = Ativos()
-
-lista_ativos = ['MGLU3','BIDI4','PETR4']
-dados = []
-
-for ativo in lista_ativos:
-    dados.append(op.dados_acao(ativo))
-
-print(dados)
