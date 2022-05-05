@@ -34,9 +34,11 @@ class Ativos:
         resultado = requisicao.json()
         nome = (resultado['results']['currencies'][moeda]['name'])
         preco = round(float(resultado['results']['currencies'][moeda]['sell']),2)
-        ativo = {['moeda']:{nome:preco},}
+        ativo = {}
+        ativo['symbol'] = moeda
+        ativo['name'] = nome
+        ativo['preco'] = preco
         return ativo
-
     
 
     
